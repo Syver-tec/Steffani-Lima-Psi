@@ -12,13 +12,22 @@ function initNavigation() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
+    const header = document.querySelector('.header');
 
-    // Toggle menu mobile
-    hamburger.addEventListener('click', function() {
+    if (!hamburger || !navMenu || !header) return;
+
+    // Alternar menu mobile
+    hamburger.addEventListener('click', function () {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
-        
-        // Animação do hamburger
+
+        // Acessibilidade: aria-expanded
+        hamburger.setAttribute(
+            'aria-expanded',
+            hamburger.classList.contains('active') ? 'true' : 'false'
+        );
+
+        // Animação dos spans do hamburger
         const spans = hamburger.querySelectorAll('span');
         if (hamburger.classList.contains('active')) {
             spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
@@ -31,21 +40,23 @@ function initNavigation() {
         }
     });
 
-    // Fechar menu ao clicar em um link
+    // Fechar menu ao clicar em qualquer link
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+
             const spans = hamburger.querySelectorAll('span');
             spans[0].style.transform = 'none';
             spans[1].style.opacity = '1';
             spans[2].style.transform = 'none';
+
+            hamburger.setAttribute('aria-expanded', 'false');
         });
     });
 
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('.header');
+    // Scroll do header
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 100) {
             header.style.background = 'rgba(255, 255, 255, 0.98)';
             header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';

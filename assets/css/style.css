@@ -58,9 +58,22 @@ body {
 }
 
 .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     text-decoration: none;
+}
+
+.logo {
+    width: 28px;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-text-container {
     display: flex;
     flex-direction: column;
+    line-height: 1.2;
 }
 
 .logo-text {
